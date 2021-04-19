@@ -1,0 +1,48 @@
+{% extends 'dearcomradehome/base.html' %}
+{% block content %}
+
+{% if preferences.preflocation %}
+Find a roommate in {{ preferences.preflocation }}
+{% else %}
+Select a city to find a roommate
+{% endif %}
+<form method="post" action="/findroommate/displaylist/">
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputState">State</label>
+            <input type="text" class="form-control" id="inputState">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputState">City</label>
+            <select id="inputCity" class="form-control" name="city">
+                <option selected>Choose...</option>
+                <option> New York</option>
+                <option> Tempe</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label>Budget</label>
+            <input type="range" name="rangeInput" min="0" max="10000" onchange="updateTextInput(this.value);">
+            <input type="text" name="budget" class="form-control" id="textInput" value="">
+        </div>
+        <div class="form-group col-md-2">
+            <label>Sex Preference</label>
+            <select id="inputSex" name="sex" class="form-control">
+                <option> Male</option>
+                <option> Female</option>
+                <option> No Preference</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<script>
+    function updateTextInput(val) {
+          document.getElementById('textInput').value=val;
+        }
+</script>
+
+</body>
+{% endblock %}
+</html>

@@ -1,0 +1,23 @@
+{% extends 'dearcomradehome/base.html' %}
+{% block content %}
+<div class="row">
+    {% for community in communities %}
+    <div class="col">
+        <form method="post" action="/findcommunity/displaycommunity/">
+            {% csrf_token %}
+            <input type="hidden" name="communityid" value="{{ community.communityid }}">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{ community.communitypictureurl }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{community.name}}</h5>
+                    <p class="card-text">{{ community.description }}</p>
+                    <button type="submit" class="btn btn-primary">View</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

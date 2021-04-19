@@ -1,0 +1,20 @@
+{% extends 'dearcomradehome/base.html' %}
+{% block content %}
+<div class="card text-center">
+    <div class="card-body">
+        <h5 class="card-title">{{community.name}}</h5>
+        <div class="row">
+            <div class="column">
+                <h4 class="card-text">{{community.addr1}} </h4>
+            </div>
+            <div class="column">
+                <h4 class="card-text">{{community.addr2}} </h4>
+            </div>
+        </div>
+        <h4 class="card-text"> {{community.avgrent}}</h4>
+        <h4 class="card-text"> {{community.phnumber}}</h4>
+        <p class="card-text">{{community.description}}</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
+{% endblock %}

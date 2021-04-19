@@ -1,0 +1,18 @@
+{% extends 'dearcomradehome/base.html' %}
+{% block content %}
+<div class="row">
+    {% for user in users %}
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{{ user.profilepicurl }}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title"> {{ user.name }}</h5>
+                <p class="card-text">{{ user.age }}</p>
+                <p class="card-text">{{ user.avgrating }}</p>
+                <a href="/displaycommunity/" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
