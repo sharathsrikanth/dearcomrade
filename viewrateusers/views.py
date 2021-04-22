@@ -10,10 +10,15 @@ def viewrateuser(request):
 def saveuserstatus(request):
     community = request.POST["community"]
     housenumber = request.POST["housenumber"]
-    userid = 'ssrika14'
+    userid = request.user.username
     savepeerdetails(community,housenumber,userid)
     saveuserhistory(userid, community)
-    return
+    pref = Userpreference.objects.get(userid=userid)
+    pref.availablestatus = False
+    pref.save(update_fields=['statusavailable'])
+    userdetails = Usersdata.objects.get(userid=userid)
+    communities = CommunityDetails.objects.all()
+    return render(request, 'users/profile.html', {'userdetails':userdetails, 'communities':communities})
 
 
 def displayuserdetails(request):
@@ -22,36 +27,41 @@ def displayuserdetails(request):
 
 def savepeerdetails(community, housenumber, userid):
     com = CommunityDetails.objects.get(name=community)
-    peerrow = UserPeerTagging.objects.get(communityid=com.communityid, housenumber=housenumber)
-    if peerrow:
-        if peerrow.userid1 is not None:
-            peerrow.userid1=userid
-            peerrow.save(update_fields=['userid1'])
-        elif peerrow.userid2 is not None:
-            peerrow.userid2 = userid
-            peerrow.save(update_fields=['userid2'])
-        elif peerrow.userid3 is not None:
-            peerrow.userid3 = userid
-            peerrow.save(update_fields=['userid3'])
-        elif peerrow.userid4 is not None:
-            peerrow.userid4 = userid
-            peerrow.save(update_fields=['userid4'])
+    peerrow = UserPeerTagging.objects.filter(communityid=com.communityid, aptno=housenumber)
+    print(peerrow[0].userid1)
+    if peerrow.exists():
+        if peerrow[0].userid1 is None:
+            peerrow[0].userid1=userid
+            peerrow[0].save(update_fields=['userid1'])
+        elif peerrow[0].userid2 is None:
+            peerrow[0].userid2 = userid
+            peerrow[0].save(update_fields=['userid2'])
+        elif peerrow[0].userid3 is None:
+            peerrow[0].userid3 = userid
+            peerrow[0].save(update_fields=['userid3'])
+        elif peerrow[0].userid4 is None:
+            peerrow[0].userid4 = userid
+            peerrow[0].save(update_fields=['userid4'])
         else: return 'Number of roommates exceeded'
+    else:
+        UserPeerTagging.objects.create(communityid=com, aptno=housenumber,userid1=userid)
     return
 
 
-def saveuserhistory(community, userid):
-    userhistory = UserHistory.objects.get(userid=userid)
-    if userhistory:
-        if userhistory.prevapartment1 is not None:
-            userhistory.save(update_fields=['prevapartment1'])
-        elif userhistory.prevapartment2 is not None:
-            userhistory.save(update_fields=['prevapartment2'])
-        elif userhistory.prevapartment3 is not None:
-            userhistory.save(update_fields=['prevapartment3'])
+def saveuserhistory(userid,community):
+    user = Usersdata.objects.get(userid=userid)
+    userhistory = UserHistory.objects.filter(userid=userid)
+    if userhistory.exists():
+        if userhistory[0].prevapartment1 is None:
+            userhistory[0].save(update_fields=['prevapartment1'])
+        elif userhistory[0].prevapartment2 is None:
+            userhistory[0].save(update_fields=['prevapartment2'])
+        elif userhistory[0].prevapartment3 is None:
+            userhistory[0].save(update_fields=['prevapartment3'])
         else:
-            userhistory.save(update_fields=['prevapartment3'])
+            userhistory[0].save(update_fields=['prevapartment1'])
     else:
-        UserHistory.objects.create(userid= userid, prevapartment1= community)
-
+        rows = UserHistory.objects.all()
+        print(rows)
+        UserHistory.objects.create(userid= user, userhistoryid=rows.count()+1, prevapartment1= community)
     return

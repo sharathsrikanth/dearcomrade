@@ -2,7 +2,7 @@ from django.db import models
 
 
 class CommunityDetails (models.Model):
-    communityid = models.CharField(max_length=50, primary_key=True)
+    communityid = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=30)
     addr1 = models.CharField(max_length=250)
     addr2 = models.CharField(max_length=250)
@@ -16,4 +16,5 @@ class CommunityDetails (models.Model):
 
     def __str__(self):
         return str(self.communityid)
+
 

@@ -5,6 +5,9 @@
     <form method="post" action="/register/completeuserregistration/">
         {% csrf_token %}
         <div> <!--class="form-row"-->
+            <input name="userid" type="hidden" value="{{userid}}">
+        </div>
+        <div> <!--class="form-row"-->
             <label for="firstname">First name</label>
             <input name="firstname" type="text" class="form-control" placeholder="First name" required>
         </div>

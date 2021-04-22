@@ -36,6 +36,7 @@ class Userpreference (models.Model):
     prefapartment1 = models.CharField(max_length=50)
     prefapartment2 = models.CharField(max_length=50)
     prefapartment3 = models.CharField(max_length=50)
+    statusavailable = models.BooleanField(default=True, null=True)
 
     class Meta:
         unique_together = (("userid", "prefid"),)
@@ -91,10 +92,10 @@ class UserHistory (models.Model):
 class UserPeerTagging (models.Model):
     communityid = models.ForeignKey(CommunityDetails, on_delete=models.CASCADE)
     aptno = models.IntegerField()
-    userid1 = models.IntegerField()
-    userid2 = models.IntegerField()
-    userid3 = models.IntegerField()
-    userid4 = models.IntegerField()
+    userid1 = models.CharField(max_length=50)
+    userid2 = models.CharField(max_length=50)
+    userid3 = models.CharField(max_length=50)
+    userid4 = models.CharField(max_length=50)
 
     class Meta:
         unique_together = (("communityid", "aptno"),)

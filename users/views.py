@@ -14,14 +14,18 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Your account has been created! Please enter your preferences to get started')
-            return render(request, 'users/userregistration.html')
+            return render(request, 'users/userregistration.html',{'userid':username})
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
 
 
 def completeuserregistration(request):
-    Usersdata.objects.create(fname=request.POST["firstname"], lname=request.POST["lastname"], phnumber=request.POST["phonenumber"], age=request.POST["age"],
+    rows = Usersdata.objects.all()
+    userid = request.POST.get('userid')
+    print(request.POST.get('userid'))
+    print('inside')
+    Usersdata.objects.create(userid=userid,fname=request.POST["firstname"], lname=request.POST["lastname"], phnumber=request.POST["phonenumber"], age=request.POST["age"],
                              sex=request.POST["sex"], addr1=request.POST["addr1"], addr2=request.POST["addr2"], country=request.POST["country"],
                              description=request.POST["description"], workinfo=request.POST["workinfo"])
     return redirect('login')

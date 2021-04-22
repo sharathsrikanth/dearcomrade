@@ -6,6 +6,7 @@ def findcommunities(request):
     communities = CommunityDetails.objects.filter()
     return render(request, 'displaycommunities.html', {'communities': communities})
 
+
 def displaycommunity(request):
     id = request.POST.get('communityid')
     community = CommunityDetails.objects.get(communityid=id)

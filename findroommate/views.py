@@ -11,6 +11,7 @@ def findroommate(request):
 def displaypotentialroommatelist(request):
     ResultantTempUserTable.objects.all().delete()
     userdetails = Usersdata.objects.get(userid='ssrika14')
+
     preference = Userpreference.objects.get(userid='ssrika14')
     sex = userdetails.sex
     users = Userpreference.objects.filter(~Q(userid='ssrika14'),preflocation=preference.preflocation, prefsex=sex, usersex=preference.prefsex,
@@ -30,7 +31,7 @@ def displaypotentialroommatelist(request):
 
     #scorecompatibility logic goes here
 
-    return render(request, 'displaylist.html', {'users':userstodisplay})
+    return render(request, 'displaylist.html', {'users': userstodisplay})
 
 
 def displayroommate(request):
@@ -50,7 +51,6 @@ def getorderedcompatibleusers(users):
         avguserrating = getavgrating(temp)
         profilepicture = tempuser.profilepicurl
         ResultantTempUserTable.objects.create(userid=user.userid, name=name, age=age, avgrating=avguserrating, compatibilityscore=0.5, profilepicurl=profilepicture)
-
     return
 
 
@@ -64,6 +64,6 @@ def getavgrating(userating):
         avgrating += userating.communityrating
 
     if avgrating > 0:
-     avgrating = avgrating/3
+        avgrating = avgrating/3
 
     return avgrating
