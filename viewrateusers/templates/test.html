@@ -1,0 +1,87 @@
+{% extends 'dearcomradehome/base.html' %}
+{% block content %}
+<div class="container-fluid">
+    <div class="wrapper">
+        <div class="left">
+            <img src="#" alt=" " width="100" height="100">
+            <div class="row">
+                <div class="col-md-4" style="width: 50%">
+                    <label>Peer Rating</label>
+                    {% if userratings.peerrating %}
+                    {{userratings.peerrating}}
+                    {% else %}
+                    NA
+                    {% endif %}
+                </div>
+                <div class="col-md-4" style="width: 50%">
+                    <label>Guest Rating</label>
+                    {% if userratings.guestrating %}
+                    {{userratings.guestrating}}
+                    {% else %}
+                    NA
+                    {% endif %}
+                </div>
+                <div class="col-md-4" style="width: 50%">
+                    <label>Community Rating</label>
+                    {% if userratings.commiunityrating %}
+                    {{userratings.commiunityrating}}
+                    {% else %}
+                    NA
+                    {% endif %}
+                </div>
+            </div>
+            <h3>{{usersdetails.fname}} {{usersdetails.lname}}</h3>
+            <h2>{{usersdetails.sex}} {{usersdetails.age}} {{usersdetails.country}}</h2>
+            <p>{{usersdetails.description}}</p>
+        </div>
+        <div class="right">
+            <div class="info">
+                <h3>Personal Information</h3>
+                <div class="info_data">
+                    <div class="data">
+                        <h4>Phone</h4>
+                        <p>{{usersdetails.phnumber}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="work_info">
+                <h3>Work Information</h3>
+                <div class="work_info_data">
+                    <div class="data">
+                        <p>{{usersdetails.workinfo}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>
+                {% if usercomments %}
+                {% for comment in usercomments %}
+                {{comment}}
+                {% endfor %}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <form method="post" action="/viewrateusers/addcommentratings/">
+        {% csrf_token %}
+        <div class="form-row">
+            <input type="hidden" name="userid" value="{{ usersdetails.userid }}">
+            <div class="form-group col-md-6">
+                <label for="user">Enter a comment</label>
+                <textarea name="comment" type="text" rows="2" cols="4" onkeyup="Allow()"
+                          placeholder="write a comment......"></textarea>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="user">User's Last Name</label>
+                <input type="number" name="number" min="0" max="5" step="0.5">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,37 +1,42 @@
 {% extends 'dearcomradehome/base.html' %}
 {% block content %}
 
+{% if usertoken is False %}
 {% if preferences.preflocation %}
-Find a roommate in {{ preferences.preflocation }}
+Find a roommate in {{ preferences.preflocation }} :
 {% else %}
 Select a city to find a roommate
 {% endif %}
+
 <form method="post" action="/findroommate/displaylist/">
     {% csrf_token %}
     <div class="form-row">
-        <div class="form-group col-md-4">
+       <!-- <div class="form-group col-md-4">
             <label for="inputState">State</label>
-            <input type="text" class="form-control" id="inputState">
-        </div>
+            <input type="text" class="form-control" id="inputState" >
+        </div>-->
         <div class="form-group col-md-4">
             <label for="inputState">City</label>
-            <select id="inputCity" class="form-control" name="city">
-                <option selected>Choose...</option>
-                <option> New York</option>
-                <option> Tempe</option>
+            <select id="inputCity" class="form-control" name="city" >
+                <option selected disabled>Choose...</option>
+                <option value="New York"> New York</option>
+                <option value="Tempe"> Tempe</option>
             </select>
         </div>
         <div class="form-group col-md-2">
-            <label>Budget</label>
-            <input type="range" name="rangeInput" min="0" max="10000" onchange="updateTextInput(this.value);">
-            <input type="text" name="budget" class="form-control" id="textInput" value="">
+            <label>Budget in $</label>
+            <input type="text" name="budget" class="form-control" id="textInput" value="1000" >
+            <br>
+            <div>
+                <input type="range" name="rangeInput" min="0" max="10000" onchange="updateTextInput(this.value);" >
+            </div>
         </div>
         <div class="form-group col-md-2">
             <label>Sex Preference</label>
-            <select id="inputSex" name="sex" class="form-control">
-                <option> Male</option>
-                <option> Female</option>
-                <option> No Preference</option>
+            <select id="inputSex" name="sex" class="form-control" required onclick="setsex(this.value);">
+                <option value="male"> Male</option>
+                <option value="female"> Female</option>
+                <option value="na"> No Preference</option>
             </select>
         </div>
     </div>
@@ -42,7 +47,7 @@ Select a city to find a roommate
           document.getElementById('textInput').value=val;
         }
 </script>
-
-</body>
+{% else %}
+<h3>Sorry! this page is not available for the community users</h3>
+{% endif %}
 {% endblock %}
-</html>

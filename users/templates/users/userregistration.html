@@ -4,37 +4,39 @@
 <div class="content-section border-bottom mb-4">
     <form method="post" action="/register/completeuserregistration/">
         {% csrf_token %}
-        <div> <!--class="form-row"-->
+        <div class="form-group"> <!--class="form-row"-->
             <input name="userid" type="hidden" value="{{userid}}">
         </div>
-        <div> <!--class="form-row"-->
+        <div class="form-group"> <!--class="form-row"-->
             <label for="firstname">First name</label>
             <input name="firstname" type="text" class="form-control" placeholder="First name" required>
         </div>
-        <div> <!--class="form-row"-->
+        <div class="form-group"> <!--class="form-row"-->
             <label for="lastname">Last name</label>
             <input name="lastname" type="text" class="form-control" placeholder="Last name" required>
         </div>
-        <div> <!--class="form-row"-->
+        <div class="form-group"> <!--class="form-row"-->
             <label for="phonenumber">Phone Number</label>
-            <input name="phonenumber" type="number" class="form-control" placeholder="Phone Number" required>
+            <input type="text" pattern="\d*" maxlength="10" class="form-control" minlength="10" id="phone"
+                   name="phonenumber" placeholder="8346571234" required>
+            <!--<input type="tel" id="phone" name="phonenumber" placeholder="8346571234"  required>-->
 
         </div>
-        <div> <!--class="form-row"-->
+        <div class="form-group"> <!--class="form-row"-->
             <label for="age">Age</label>
             <input name="age" type="number" class="form-control" placeholder="Age" required>
 
         </div>
-        <div> <!--class="form-row"-->
+        <div class="form-group"> <!--class="form-row"-->
             <label for="sex">Sex</label>
-            <input name="sex" type="text" class="form-control" placeholder="Sex" required>
+            <input name="sex" type="text" class="form-control" placeholder="male/female" required>
 
         </div>
-        <div> <!--class="form-group"-->
-            <label for="inputAddress">Address</label>
+        <div class="form-group"> <!--class="form-group"-->
+            <label for="inputAddress">Address 1</label>
             <input name="addr1" type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
         </div>
-        <div> <!--class="form-group"-->
+        <div class="form-group"> <!--class="form-group"-->
             <label for="inputAddress2">Address 2</label>
             <input name="addr2" type="text" class="form-control" id="inputAddress2"
                    placeholder="Apartment, studio, or floor" required>
@@ -42,20 +44,24 @@
         <div> <!--class="form-row"-->
             <div class="form-group">
                 <label for="inputCountry">Country</label>
-                <input name="country" type="text" class="form-control ml-2" id="inputCountry" placeholder="Country" required>
-
+                <input name="country" type="text" class="form-control ml-2" id="inputCountry" placeholder="Country"
+                       required>
             </div>
         </div>
         <div> <!--class="form-row"-->
-            <label for="description">Description</label>
-            <input name="description" type="text" class="form-control ml-2" placeholder="Description" required>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input name="description" type="text" class="form-control ml-2" placeholder="Description" required>
+            </div>
         </div>
-        <div> <!--class="form-row"-->
+        <div class="form-group"> <!--class="form-row"-->
             <label for="workinfo">Work Info</label>
             <input name="workinfo" type="text" class="form-control ml-2" placeholder="Work info" required>
 
         </div>
-        <button type="submit" class="btn btn-outline-info">Complete</button>
+        <div class="form-group">
+            <button type="submit" class="btn btn-outline-info form-control">Complete</button>
+        </div>
 
     </form>
 </div>

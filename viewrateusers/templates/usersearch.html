@@ -1,4 +1,26 @@
 {% extends 'dearcomradehome/base.html' %}
 {% block content %}
-    User search
+<h3>Enter User's Name to search: </h3>
+<form method="post" action="/viewrateusers/displayuserdetails/">
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="user">User's First Name</label>
+            <input type="text" class="form-control" name="fname">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="user">User's Last Name</label>
+            <input type="text" class="form-control" name="lname">
+        </div>
+       <!-- <div class="form-group col-md-4">
+            <label for="city">City</label>
+            <select id="inputCity" class="form-control" name="city">
+                <option selected>Choose...</option>
+                <option value="new york"> New York</option>
+                <option value="tempe"> Tempe</option>
+            </select>
+        </div>-->
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 {% endblock %}

@@ -9,32 +9,39 @@
             <p class="text-secondary">{{ user.email }}</p>
         </div>
     </div>
-    <div class="custom-control custom-switch" id="statuschange">
-        <input type="checkbox" class="custom-control-input" id="customSwitch1">
-        <label class="custom-control-label" for="customSwitch1">Toggle this switch to change the status</label>
-        <button type="button" onclick="showform()">Save</button>
-    </div>
-    <div id="userchangeform" style="display:none;">
-        <form method="post" action="/viewrateusers/saveuserstatus/">
-            {% csrf_token %}
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputState">Community</label>
-                    <select id="inputCity" class="form-control" name="community">
-                        <option>Select a community ...</option>
-                        {% for community in communities %}
-                        <option> {{community.name}}</option>
-                        {% endfor %}
-                    </select>
+    {% if usertoken is False %}
+    {% if message %}
+        <h4>{{message}}</h4>
+    {% endif %}
+    <div id="sectionsnottobeshown">
+        <div class="custom-control custom-switch" id="statuschange">
+            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+            <label class="custom-control-label" for="customSwitch1">Select this switch to change the your current occupancy status</label>
+            <button type="button" class="btn btn-primary" onclick="showform()">Save</button>
+        </div>
+        <div id="userchangeform" style="display:none;">
+            <form method="post" action="/viewrateusers/saveuserstatus/">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputState">Community</label>
+                        <select id="inputCity" class="form-control" name="community">
+                            <option>Select a community ...</option>
+                            {% for community in communities %}
+                            <option> {{community.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputState">House Number</label>
+                        <input type="number" class="form-control" id="inputState" name="housenumber">
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="inputState">House Number</label>
-                    <input type="number" class="form-control" id="inputState" name="housenumber">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
     </div>
+    {% endif %}
     <!-- FORM HERE -->
 </div>
 <script>
@@ -44,7 +51,6 @@
              x.style.display = "block";
         }
       }
-
 </script>
 {% endblock content %}
 

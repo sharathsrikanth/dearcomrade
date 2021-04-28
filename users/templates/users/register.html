@@ -9,6 +9,14 @@
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
+            <label>Type of registration</label>
+            <!--<select id="registrationtype" name="registrationtype" class="form-control">
+                <option value="user"> User</option>
+                <option value="community"> Community</option>
+            </select> -->
+            <input name="registrationtype" type="text" class="form-control" placeholder="user/community" required>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Sign Up</button>
             </div>
         </form>

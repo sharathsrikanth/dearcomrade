@@ -3,7 +3,7 @@ from .models import CommunityDetails
 
 
 def findcommunities(request):
-    communities = CommunityDetails.objects.filter()
+    communities = CommunityDetails.objects.all()
     return render(request, 'displaycommunities.html', {'communities': communities})
 
 

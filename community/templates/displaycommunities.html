@@ -1,5 +1,6 @@
 {% extends 'dearcomradehome/base.html' %}
 {% block content %}
+{% if communities %}
 <div class="row">
     {% for community in communities %}
     <div class="col">
@@ -14,10 +15,11 @@
                     <button type="submit" class="btn btn-primary">View</button>
                 </div>
             </div>
-
         </form>
-
     </div>
     {% endfor %}
 </div>
+{% else %}
+<h3> There are no communities to display!</h3>
+{% endif %}
 {% endblock %}

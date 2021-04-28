@@ -2,21 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bdd77af9-3983-408f-b679-d483fcab699d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../community/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../community/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/../community/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../community/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../community/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dearcomrade/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dearcomrade/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dearcomradehome/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../findroommate/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../findroommate/migrations/0002_resultanttempusertable.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../findroommate/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../findroommate/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users/templates/users/userregistration.html" beforeDir="false" afterPath="$PROJECT_DIR$/../users/templates/users/userregistration.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../users/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../viewrateusers/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/../viewrateusers/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../users/templates/users/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/../users/templates/users/register.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../viewrateusers/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/../viewrateusers/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../viewrateusers/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../viewrateusers/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../~$oject 2 Checkpoint Report.docx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

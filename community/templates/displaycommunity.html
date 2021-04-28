@@ -1,5 +1,6 @@
 {% extends 'dearcomradehome/base.html' %}
 {% block content %}
+{% if community %}
 <div class="card text-center">
     <div class="card-body">
         <h5 class="card-title">{{community.name}}</h5>
@@ -17,4 +18,7 @@
         <a href="#" class="btn btn-primary">Go somewhere</a>
     </div>
 </div>
+{% else %}
+<h3>Community details not available!</h3>
+{% endif %}
 {% endblock %}

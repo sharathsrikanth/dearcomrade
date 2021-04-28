@@ -71,15 +71,15 @@ class UserComments (models.Model):
         db_table = 'usercomments'
 
     def __str__(self):
-        return self.userid
+        return str(self.userid)
 
 
 class UserHistory (models.Model):
     userid = models.ForeignKey(Usersdata, on_delete=models.CASCADE)
     userhistoryid = models.IntegerField()
-    prevapartment1 = models.CharField(max_length=50)
-    prevapartment2 = models.CharField(max_length=50)
-    prevapartment3 = models.CharField(max_length=50)
+    prevapartment1 = models.CharField(max_length=50,null=True)
+    prevapartment2 = models.CharField(max_length=50,null=True)
+    prevapartment3 = models.CharField(max_length=50,null=True)
 
     class Meta:
         unique_together = (("userid", "userhistoryid"),)
@@ -92,14 +92,14 @@ class UserHistory (models.Model):
 class UserPeerTagging (models.Model):
     communityid = models.ForeignKey(CommunityDetails, on_delete=models.CASCADE)
     aptno = models.IntegerField()
-    userid1 = models.CharField(max_length=50)
-    userid2 = models.CharField(max_length=50)
-    userid3 = models.CharField(max_length=50)
-    userid4 = models.CharField(max_length=50)
+    userid1 = models.CharField(max_length=50,null=True)
+    userid2 = models.CharField(max_length=50,null=True)
+    userid3 = models.CharField(max_length=50,null=True)
+    userid4 = models.CharField(max_length=50,null=True)
 
     class Meta:
         unique_together = (("communityid", "aptno"),)
         db_table = 'userpeertagging'
 
     def __str__(self):
-        return str(self.communityid+self.aptno)
+        return (str(self.communityid)+str(self.aptno))

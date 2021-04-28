@@ -17,4 +17,16 @@ class CommunityDetails (models.Model):
     def __str__(self):
         return str(self.communityid)
 
+class CommunityUserDetails (models.Model):
+    communityid = models.ForeignKey(CommunityDetails, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    communityuserid = models.CharField(max_length=50)
+
+    class Meta:
+       unique_together = (("communityuserid", "name"),)
+       db_table = 'communityuserdetails'
+
+    def __str__(self):
+        return (str(self.name))
+
 
