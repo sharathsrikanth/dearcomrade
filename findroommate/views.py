@@ -34,7 +34,7 @@ def displaypotentialroommatelist(request):
         count = ResultantTempUserTable.objects.all().count()
         if count < 20:
             users = Userpreference.objects.filter(~Q(userid=request.user.username), preflocation=preference.preflocation, prefsex=sex,
-                                                  usersex=sex)[:20-count]
+                                                  usersex=preference.prefsex)[:20-count]
         if users.exists():
             getorderedcompatibleusers(users)
         count = ResultantTempUserTable.objects.all().count()

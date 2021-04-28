@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm
 from django.contrib.auth.models import User
-from viewrateusers.models import Usersdata
+from viewrateusers.models import Usersdata,Userpreference
 from community.models import CommunityDetails,CommunityUserDetails
 
 
@@ -31,13 +31,24 @@ def completeuserregistration(request):
         rows = Usersdata.objects.all()
         userid = request.POST.get('userid')
         print(request.POST.get('userid'))
-        Usersdata.objects.create(userid=userid,fname=request.POST["firstname"], lname=request.POST["lastname"], phnumber=request.POST["phonenumber"], age=request.POST["age"],
+        Usersdata.objects.create(userid=userid,fname=request.POST["firstname"].lower(), lname=request.POST["lastname"].lower(), phnumber=request.POST["phonenumber"], age=request.POST["age"],
                                  sex=request.POST["sex"].lower(), addr1=request.POST["addr1"], addr2=request.POST["addr2"], country=request.POST["country"],
                                  description=request.POST["description"], workinfo=request.POST["workinfo"])
-        return redirect('login')
+        return render(request, 'users/userprefregistration.html', {'userid': userid})
     else:
-        messages.error(request, f'Could receive the data, Try again!')
+        messages.error(request, f'Could not receive the data, Try again!')
         return redirect('login')
+
+
+def completeuserprefregistration(request):
+    rows = Userpreference.objects.all()
+    userid = request.POST.get('userid')
+    user = Usersdata.objects.get(userid=userid)
+    Userpreference.objects.create(userid=user,prefid=rows.count()+1,preflocation=request.POST["preflocation"].lower(), prefsex=request.POST["prefsex"].lower(), usersex=request.POST["usersex"].lower(),
+                             budget=request.POST["budget"], cleanliness=request.POST["cleanliness"], booze_smoke=request.POST["booze_smoke"], prefapartment1=request.POST["prefapartment1"].lower(),
+                             prefapartment2=request.POST["prefapartment2"].lower(), prefapartment3=request.POST["prefapartment3"].lower())
+    return redirect('login')
+
 
 def completecommunityuserregistration(request):
     if request.POST:
@@ -49,6 +60,7 @@ def completecommunityuserregistration(request):
     else:
         messages.error(request, f'Could receive the community details and account created with default community')
         return redirect('login')
+
 
 @login_required
 def profile(request):

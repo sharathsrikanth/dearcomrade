@@ -1,0 +1,74 @@
+{% extends "dearcomradehome/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section border-bottom mb-4">
+    <form method="post" action="/register/completeuserprefregistration/">
+        {% csrf_token %}
+        <div> <!--class="form-row"-->
+            <input name="userid" type="hidden" value="{{userid}}">
+        </div>
+        <div class="form-group"> <!--class="form-row"-->
+            <label for="preflocation">Location Preference</label>
+            <input name="preflocation" type="text" class="form-control ml-2" placeholder="Tempe" required>
+        </div>
+        <div class="form-group">
+            <label class="mr-sm-2" for="prefsex">Sex Preference</label>
+            <select name="prefsex" class="custom-select mr-sm-2" placeholder="male/female">
+                <option selected>Choose...</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="na">NA</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="mr-sm-2" for="usersex">User Sex </label>
+            <select class="custom-select mr-sm-2" name="usersex" placeholder="male/female">
+                <option selected>Choose...</option>
+                <option value="1">Male</option>
+                <option value="2">Female</option>
+                <option value="3">Prefer Not to Say</option>
+            </select>
+        </div>
+        <div class="form-group"> <!--class="form-row"-->
+            <label for="budget">Budget</label>
+            <input name="budget" type="number" class="form-control ml-2" placeholder="500$/month" required>
+        </div>
+        <div class="form-group">
+            <label class="mr-sm-2" for="cleanliness">Cleanliness</label>
+            <select name="cleanliness" class="custom-select mr-sm-2"
+                    placeholder="any number between 0-5. 5 being clean and 0 being dirty">
+                <option selected>Choose...</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="mr-sm-2" for="booze_smoke">Booze/Smoke</label>
+            <select name="booze_smoke" class="custom-select mr-sm-2" placeholder="true/false">
+                <option selected>Choose...</option>
+                <option value="True">True</option>
+                <option value="False">False</option>
+            </select>
+        </div>
+        <div class="form-group"> <!--class="form-row"-->
+            <label for="prefapartment1">Preference Apartment 1</label>
+            <input name="prefapartment1" type="text" class="form-control ml-2" placeholder="Ex: Nexa" required>
+        </div>
+        <div class="form-group"> <!--class="form-row"-->
+            <label for="prefapartment2">Preference Apartment 2</label>
+            <input name="prefapartment2" type="text" class="form-control ml-2" placeholder="Ex: Omnia" required>
+        </div>
+        <div class="form-group"> <!--class="form-row"-->
+            <label for="prefapartment3">Preference Apartment 3</label>
+            <input name="prefapartment3" type="text" class="form-control ml-2" placeholder="Ex: DPV" required>
+        </div>
+        <div class="form-group">
+              <button type="submit" class="btn btn-outline-info">Complete</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

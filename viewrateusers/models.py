@@ -1,5 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 from community.models import CommunityDetails
 
 
@@ -7,7 +8,7 @@ class Usersdata (models.Model):
     userid = models.CharField(max_length=50, primary_key=True)
     fname = models.CharField(max_length=30)
     lname = models.CharField(max_length=30)
-    phnumber = models.IntegerField()
+    phnumber = PhoneNumberField()
     age = models.IntegerField()
     sex = models.CharField(max_length=10)
     addr1 = models.CharField(max_length=250)
@@ -49,9 +50,9 @@ class Userpreference (models.Model):
 class UserRating (models.Model):
     userid = models.ForeignKey(Usersdata, on_delete=models.CASCADE)
     ratingid = models.IntegerField()
-    peerrating = models.FloatField( validators=[MaxValueValidator(5), MinValueValidator(0)])
-    guestrating = models.FloatField(validators=[MaxValueValidator(5), MinValueValidator(0)])
-    communityrating = models.FloatField(validators=[MaxValueValidator(5), MinValueValidator(0)])
+    peerrating = models.FloatField( validators=[MaxValueValidator(5), MinValueValidator(0)],null=True)
+    guestrating = models.FloatField(validators=[MaxValueValidator(5), MinValueValidator(0)],null=True)
+    communityrating = models.FloatField(validators=[MaxValueValidator(5), MinValueValidator(0)],null=True)
 
     class Meta:
         unique_together = (("userid", "ratingid"),)
