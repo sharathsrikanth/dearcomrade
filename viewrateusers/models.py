@@ -8,7 +8,7 @@ class Usersdata (models.Model):
     userid = models.CharField(max_length=50, primary_key=True)
     fname = models.CharField(max_length=30)
     lname = models.CharField(max_length=30)
-    phnumber = PhoneNumberField()
+    phnumber = models.CharField(max_length=11)
     age = models.IntegerField()
     sex = models.CharField(max_length=10)
     addr1 = models.CharField(max_length=250)

@@ -15,32 +15,43 @@ def findroommate(request):
 
 
 def displaypotentialroommatelist(request):
-    current_city_pref = request.POST.get('city')
-    current_budget = request.POST.get('budget')
-    current_sex_pref = request.POST.get('sex')
-
-
     ResultantTempUserTable.objects.all().delete()
     userdetails = Usersdata.objects.get(userid=request.user.username)
     sex = userdetails.sex
+
     preference = Userpreference.objects.get(userid=request.user.username)
+    if request.POST.get('city'):
+        current_city_pref = request.POST.get('city')
+    else:
+        current_city_pref=preference.preflocation
+
+    if request.POST.get('budget'):
+        current_budget_pref = request.POST.get('budget')
+    else:
+        current_budget_pref=preference.budget
+    if request.POST.get('sex'):
+        current_sex_pref = request.POST.get('sex')
+    else:
+        current_sex_pref=preference.prefsex
 
     if preference.statusavailable:
-        users = Userpreference.objects.filter(~Q(userid=request.user.username),preflocation=preference.preflocation, prefsex=sex, usersex=preference.prefsex,
-                                              budget__gte=(preference.budget-100), budget__lte=(preference.budget+100),
+        users = Userpreference.objects.filter(~Q(userid=request.user.username),preflocation=current_city_pref, prefsex=current_sex_pref, usersex=preference.prefsex,
+                                              budget__gte=(current_budget_pref-100), budget__lte=(current_budget_pref+100),
                                               cleanliness__gte=(preference.cleanliness-0.5), cleanliness__lte=(preference.cleanliness+0.5))[:30]
         if users.exists():
             getorderedcompatibleusers(users)
         count = ResultantTempUserTable.objects.all().count()
+
         if count < 20:
-            users = Userpreference.objects.filter(~Q(userid=request.user.username), preflocation=preference.preflocation, prefsex=sex,
-                                                  usersex=preference.prefsex)[:20-count]
+            users = Userpreference.objects.filter(~Q(userid=request.user.username), preflocation=current_city_pref, prefsex=sex,
+                                                  usersex=current_sex_pref)[:20-count]
         if users.exists():
             getorderedcompatibleusers(users)
+
         count = ResultantTempUserTable.objects.all().count()
 
         if count < 20:
-            users = Userpreference.objects.filter(~Q(userid=request.user.username), preflocation=preference.preflocation)[:20 - count]
+            users = Userpreference.objects.filter(~Q(userid=request.user.username), preflocation=current_sex_pref)[:20 - count]
 
         if users.exists():
             getorderedcompatibleusers(users)
@@ -65,33 +76,35 @@ def findroommates(request):
 
 
 def getorderedcompatibleusers(users):
-    for user in users:
-        temp = UserRating.objects.get(userid=user.userid)
-        tempuser = Usersdata.objects.get(userid=user.userid)
+    for usertocalculate in users:
+        print(usertocalculate.userid)
+        temp = UserRating.objects.filter(userid=usertocalculate.userid)
+        tempuser = Usersdata.objects.get(userid=usertocalculate.userid)
         name = tempuser.fname+tempuser.lname
         age = tempuser.age
+        print(temp)
         profilepicture = tempuser.profilepicurl
         if temp:
-            avguserrating = getavgrating(temp)
-            userexists = ResultantTempUserTable.objects.filter(userid=user.userid)
+            avguserrating = getavgrating(temp[0])
+            userexists = ResultantTempUserTable.objects.filter(userid=usertocalculate.userid)
             if not userexists.exists():
-                ResultantTempUserTable.objects.create(userid=user.userid, name=name, age=age, avgrating=avguserrating,
+                ResultantTempUserTable.objects.create(userid=usertocalculate.userid, name=name, age=age, avgrating=avguserrating,
                                                      profilepicurl=profilepicture)
         else:
-            userexists = ResultantTempUserTable.objects.filter(userid=user.userid)
+            userexists = ResultantTempUserTable.objects.filter(userid=usertocalculate.userid)
             if not userexists.exists():
-                ResultantTempUserTable.objects.create(userid=user.userid, name=name, age=age,
+                ResultantTempUserTable.objects.create(userid=usertocalculate.userid, name=name, age=age,
                                                        profilepicurl=profilepicture)
-        return
+    return
 
 
 def getavgrating(userating):
     avgrating = 0
-    if userating.peerrating > 0:
+    if userating.peerrating:
         avgrating += userating.peerrating
-    if userating.guestrating > 0:
+    if userating.guestrating:
         avgrating += userating.guestrating
-    if userating.communityrating > 0:
+    if userating.communityrating:
         avgrating += userating.communityrating
 
     if avgrating > 0:

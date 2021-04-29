@@ -8,10 +8,10 @@
             {% csrf_token %}
             <input type="hidden" name="communityid" value="{{ community.communityid }}">
             <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{{ community.communitypictureurl }}" alt="Card image cap">
+               <!-- <img class="card-img-top" src="{{ community.communitypictureurl }}" alt="Card image cap">-->
                 <div class="card-body">
-                    <h5 class="card-title">{{community.name}}</h5>
-                    <p class="card-text">{{ community.description }}</p>
+                    <h5 class="card-title">Name: {{community.name}}</h5>
+                    <p class="card-text">Desc: {{ community.description }}</p>
                     <button type="submit" class="btn btn-primary">View</button>
                 </div>
             </div>

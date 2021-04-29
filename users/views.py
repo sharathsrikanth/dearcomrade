@@ -30,8 +30,8 @@ def completeuserregistration(request):
     if request.POST:
         rows = Usersdata.objects.all()
         userid = request.POST.get('userid')
-        print(request.POST.get('userid'))
-        Usersdata.objects.create(userid=userid,fname=request.POST["firstname"].lower(), lname=request.POST["lastname"].lower(), phnumber=request.POST["phonenumber"], age=request.POST["age"],
+        phone_number=str(request.POST["phonenumber"])
+        Usersdata.objects.create(userid=userid,fname=request.POST["firstname"].lower(), lname=request.POST["lastname"].lower(), phnumber=phone_number, age=request.POST["age"],
                                  sex=request.POST["sex"].lower(), addr1=request.POST["addr1"], addr2=request.POST["addr2"], country=request.POST["country"],
                                  description=request.POST["description"], workinfo=request.POST["workinfo"])
         return render(request, 'users/userprefregistration.html', {'userid': userid})

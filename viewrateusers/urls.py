@@ -7,4 +7,5 @@ urlpatterns = [
     path('addcommentratings/',views.addcommentratings, name='addcommentratings'),
     path('displayuser/',views.searchusers, name='searchusers'),
     path('saveuserstatus/',views.saveuserstatus, name='saveuserstatus'),
+    path('saveuserprofilepicture/',views.saveuserprofilepicture, name='saveuserprofilepicture'),
 ]

@@ -7,16 +7,24 @@
         <div class="media-body">
             <h2 class="account-heading">{{ user.username }}</h2>
             <p class="text-secondary">{{ user.email }}</p>
+            <p class="text-secondary">Upload your profile image</p>
+            <form method="post" enctype="multipart/form-data" action="/viewrateusers/saveuserprofilepicture/">
+                {% csrf_token %}
+                <input type="file" name="myfile">
+                <button type="submit" class="btn btn-link">Upload</button>
+            </form>
         </div>
     </div>
     {% if usertoken is False %}
     {% if message %}
-        <h4>{{message}}</h4>
+    <h4>{{message}}</h4>
     {% endif %}
     <div id="sectionsnottobeshown">
+        <br>
         <div class="custom-control custom-switch" id="statuschange">
             <input type="checkbox" class="custom-control-input" id="customSwitch1">
-            <label class="custom-control-label" for="customSwitch1">Select this switch to change the your current occupancy status</label>
+            <label class="custom-control-label" for="customSwitch1">Select this switch to change the your current
+                occupancy status</label>
             <button type="button" class="btn btn-primary" onclick="showform()">Save</button>
         </div>
         <div id="userchangeform" style="display:none;">

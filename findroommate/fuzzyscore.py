@@ -7,7 +7,9 @@ def findscores(users, userpreference):
     for user in users:
         tempuserpref = Userpreference.objects.get(userid=user.userid)
         temp = tempuserpref.prefapartment1+tempuserpref.prefapartment2+tempuserpref.prefapartment3
-        ratio = fuzz.ratio(pref.lower(), temp.lower())
+        print(pref != temp)
+        print(temp)
+        ratio = fuzz.ratio(pref.lower(),temp.lower())
         row = ResultantTempUserTable.objects.get(userid=user.userid)
         row.compatibilityscore = ratio
         print(row.compatibilityscore)

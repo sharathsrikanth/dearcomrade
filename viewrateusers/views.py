@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Userpreference, Usersdata, UserRating, UserHistory, UserPeerTagging, UserComments
 from community.models import CommunityDetails, CommunityUserDetails
-
+from django.contrib.auth import get_user_model
 
 def viewrateuser(request):
     return render(request, 'usersearch.html')
@@ -48,9 +48,8 @@ def displayuserdetails(request):
 
 def searchusers(request):
     selecteduser = Usersdata.objects.get(userid=request.POST["userid"])
-    print(selecteduser.fname)
     comments = UserComments.objects.filter(userid=request.POST["userid"])[:5]
-    ratings = UserRating.objects.get(userid=request.POST["userid"])
+    ratings = UserRating.objects.filter(userid=request.POST["userid"])
     return render(request, 'usersdisplay.html',
                   {'usersdetails': selecteduser, 'usercomments': comments, 'userratings': ratings})
 
@@ -58,8 +57,9 @@ def searchusers(request):
 def savepeerdetails(community, housenumber, userid):
     com = CommunityDetails.objects.get(name=community)
     peerrow = UserPeerTagging.objects.filter(communityid=com.communityid, aptno=housenumber)
-    peerrowupdate = UserPeerTagging.objects.get(communityid=com.communityid, aptno=housenumber)
+
     if peerrow.exists():
+        peerrowupdate = UserPeerTagging.objects.get(communityid=com.communityid, aptno=housenumber)
         if peerrowupdate.userid1 != userid and peerrowupdate.userid2 != userid and peerrowupdate.userid3 != userid and peerrowupdate.userid4 != userid:
             if not peerrow[0].userid1:
                 peerrowupdate.userid1 = userid
@@ -83,8 +83,9 @@ def savepeerdetails(community, housenumber, userid):
 def saveuserhistory(userid, community):
     user = Usersdata.objects.get(userid=userid)
     userhistory = UserHistory.objects.filter(userid=userid)
-    userhistoryupdate = UserHistory.objects.get(userid=userid)
+
     if userhistory.exists():
+        userhistoryupdate = UserHistory.objects.get(userid=userid)
         if not userhistory[0].prevapartment1:
             userhistoryupdate.save(update_fields=['prevapartment1'])
         elif not userhistory[0].prevapartment2:
@@ -106,7 +107,8 @@ def addcommentratings(request):
     loggedinuser = request.user.username
     user = Usersdata.objects.get(userid=userid)
     communityuserqueryset = CommunityUserDetails.objects.filter(communityuserid=loggedinuser)
-    currentuserrating = UserRating.objects.get(userid=userid)
+    currentuserrating = UserRating.objects.filter(userid=userid)
+
 
     if comment:
         rows = UserComments.objects.all()
@@ -124,48 +126,46 @@ def addcommentratings(request):
         if currentusercheck.exists() and selectedusercheck.exists():
             if currentusercheck[0].communityid == selectedusercheck[0].communityid and currentusercheck[0].aptno == \
                     selectedusercheck[0].aptno:
-                if currentuserrating:
-                    if currentuserrating.peerrating:
-                        currentrating = currentuserrating.peerrating + float(rating)
+                if currentuserrating.exists():
+                    currentuserratingval = currentuserrating[0]
+                    if currentuserratingval.peerrating:
+                        currentrating = currentuserratingval.peerrating + float(rating)
                         currentrating = currentrating / 2
                     else:
                         currentrating = float(rating)
-                    currentuserrating.peerrating = currentrating
-                    currentuserrating.save(update_fields=['peerrating'])
+                    currentuserratingval.peerrating = currentrating
+                    currentuserratingval.save(update_fields=['peerrating'])
                 else:
                     rowcount = UserRating.objects.all()
                     currentrating = float(rating)
                     UserRating.objects.create(userid=user, ratingid=rowcount.count() + 1, peerrating=currentrating)
 
         elif communityuserqueryset.exists():
-            if currentuserrating:
-                if currentuserrating.communityrating:
-                    currentrating = currentuserrating.communityrating + float(rating)
-                    print('inside')
+            if currentuserrating.exists():
+                currentuserratingval=currentuserrating[0]
+                if currentuserratingval.communityrating:
+                    currentrating = currentuserratingval.communityrating + float(rating)
                     currentrating = currentrating / 2
                 else:
                     currentrating = float(rating)
 
-                currentuserrating.communityrating = currentrating
-                currentuserrating.save(update_fields=['communityrating'])
+                currentuserratingval.communityrating = currentrating
+                currentuserratingval.save(update_fields=['communityrating'])
             else:
                 rowcount = UserRating.objects.all()
-                if currentuserrating.communityrating:
-                    currentrating = currentuserrating.peerrating + float(rating)
-                    currentrating = currentrating / 2
-                else:
-                    currentrating = float(rating)
-                UserRating.objects.create(userid=user, ratingid=rowcount.count() + 1, peerrating=currentrating)
+                currentrating = float(rating)
+                UserRating.objects.create(userid=user, ratingid=rowcount.count() + 1, communityrating=currentrating)
         else:
-            if currentuserrating:
-                if currentuserrating.guestrating:
-                    currentrating = currentuserrating.guestrating + float(rating)
+            if currentuserrating.exists():
+                currentuserratingval=currentuserrating[0]
+                if currentuserratingval.guestrating:
+                    currentrating = currentuserratingval.guestrating + float(rating)
                     currentrating = currentrating / 2
                 else:
                     currentrating = float(rating)
 
-                currentuserrating.guestrating = currentrating
-                currentuserrating.save(update_fields=['guestrating'])
+                currentuserratingval.guestrating = currentrating
+                currentuserratingval.save(update_fields=['guestrating'])
             else:
                 rowcount = UserRating.objects.all()
                 currentrating = float(rating)
@@ -173,3 +173,19 @@ def addcommentratings(request):
 
 
     return render(request, 'usersearch.html')
+
+def saveuserprofilepicture(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        request.user.profile.image = myfile
+        request.user.profile.save()
+        communities = CommunityDetails.objects.all()
+        usertoken = CommunityUserDetails.objects.filter(communityuserid=request.user.username)
+        print(usertoken)
+        if usertoken.exists():
+            return render(request, 'users/profile.html',
+                          {'userdetails': usertoken, 'communities': communities, 'usertoken': usertoken})
+        else:
+            userdetails = Usersdata.objects.get(userid=request.user.username)
+            return render(request, 'users/profile.html',
+                          {'userdetails': userdetails, 'communities': communities, 'usertoken': False})
