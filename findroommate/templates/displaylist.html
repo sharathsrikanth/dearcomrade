@@ -1,19 +1,28 @@
 {% extends 'dearcomradehome/base.html' %}
 {% block content %}
+{% if users %}
 <div class="row">
-    {% for user in users %}
+    {% for usertodisplay in users %}
     <div class="col">
         <div class="card" style="width: 18rem;">
 <!--            <img class="card-img-top" src="{{ user.profilepicurl }}" alt="Card image cap">-->
             <div class="card-body">
-                <h5 class="card-title"> {{ user.name }}</h5>
-                <p class="card-text">{{ user.age }}</p>
-                <p class="card-text">{{ user.avgrating }}</p>
-                <p class="card-text">Compatibility score based on apartment pref: {{ user.compatibilityscore }}%</p>
-                <a href="/displaycommunity/" class="btn btn-primary">View</a>
+                <h5 class="card-title">Name: {{ usertodisplay.name }}</h5>
+                <p class="card-text">Age: {{ usertodisplay.age }}</p>
+                <p class="card-text">Rating: {{ usertodisplay.avgrating }}</p>
+                <p class="card-text">Compatibility score based on apartment pref: {{ usertodisplay.compatibilityscore }}%</p>
+                <form method="POST" action="/findroommate/displayuser/">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ usertodisplay.userid }}">
+                    <input type="submit" class="btn btn-primary" value="View">
+                </form>
             </div>
         </div>
+        <br>
     </div>
     {% endfor %}
 </div>
+{% else %}
+No Matching users found!
+{% endif %}
 {% endblock %}

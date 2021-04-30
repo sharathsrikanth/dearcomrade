@@ -1,6 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from viewrateusers.models import Usersdata,Userpreference,UserRating,UserComments
+from viewrateusers.models import Usersdata,Userpreference,UserRating,UserComments,UserHistory
 
 
 class ResultantTempUserTable (models.Model):

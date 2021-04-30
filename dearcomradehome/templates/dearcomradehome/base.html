@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'dearcomradehome/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/dearcomradehome/main.css' %}">
 
     {% if title %}
         <title>Dear Comrade - {{ title }}</title>
@@ -18,7 +18,7 @@
         <title>Dear Comrade</title>
     {% endif %}
 </head>
-<body>
+<body class="cover">
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
@@ -48,13 +48,12 @@
         </div>
       </nav>
     </header>
-    <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
+    <main role="main" class="container" >
+      <div class="row" >
+        <div class="col-md-12">
           {% block content %}{% endblock %}
         </div>
         </div>
-
     </main>
 
     <!-- Optional JavaScript -->

@@ -1,7 +1,7 @@
 {% extends "dearcomradehome/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="content-section">
+<div class="content-section col-sm-6">
     <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
         <div class="media-body">
@@ -21,16 +21,16 @@
     {% endif %}
     <div id="sectionsnottobeshown">
         <br>
-        <div class="custom-control custom-switch" id="statuschange">
-            <input type="checkbox" class="custom-control-input" id="customSwitch1">
-            <label class="custom-control-label" for="customSwitch1">Select this switch to change the your current
+        <div id="statuschange">
+            <label class="custom-control-label" for="customSwitch1">Click here to change the your current
                 occupancy status</label>
-            <button type="button" class="btn btn-primary" onclick="showform()">Save</button>
+            <button type="button" class="btn btn-primary" onclick="showform()">Change</button>
         </div>
         <div id="userchangeform" style="display:none;">
             <form method="post" action="/viewrateusers/saveuserstatus/">
                 {% csrf_token %}
                 <div class="form-row">
+
                     <div class="form-group col-md-6">
                         <label for="inputState">Community</label>
                         <select id="inputCity" class="form-control" name="community">

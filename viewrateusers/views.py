@@ -50,8 +50,18 @@ def searchusers(request):
     selecteduser = Usersdata.objects.get(userid=request.POST["userid"])
     comments = UserComments.objects.filter(userid=request.POST["userid"])[:5]
     ratings = UserRating.objects.filter(userid=request.POST["userid"])
+    userhistory = UserHistory.objects.filter(userid=request.POST["userid"])
+    if ratings.exists():
+        rating = ratings[0]
+    else:
+        rating = ratings
+
+    if userhistory.exists():
+        userhistory = userhistory[0]
+    else:
+        userhistory = userhistory
     return render(request, 'usersdisplay.html',
-                  {'usersdetails': selecteduser, 'usercomments': comments, 'userratings': ratings})
+                  {'usersdetails': selecteduser, 'usercomments': comments, 'userratings': rating, 'userhistory': userhistory})
 
 
 def savepeerdetails(community, housenumber, userid):
@@ -175,10 +185,11 @@ def addcommentratings(request):
     return render(request, 'usersearch.html')
 
 def saveuserprofilepicture(request):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
-        request.user.profile.image = myfile
-        request.user.profile.save()
+    if request.method == 'POST':
+        if request.FILES['myfile']:
+            myfile = request.FILES['myfile']
+            request.user.profile.image = myfile
+            request.user.profile.save()
         communities = CommunityDetails.objects.all()
         usertoken = CommunityUserDetails.objects.filter(communityuserid=request.user.username)
         print(usertoken)

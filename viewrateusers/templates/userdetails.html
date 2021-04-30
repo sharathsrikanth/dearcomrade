@@ -5,16 +5,14 @@
     {% for potentialuser in users %}
     <div class="col">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{{ user.profilepicurl }}" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title"> {{ potentialuser.fname }}</h5>
-                <h5 class="card-title"> {{ potentialuser.lname }}</h5>
-                <p class="card-text">{{ potentialuser.age }}</p>
-                <p class="card-text">{{ potentialuser.country }}</p>
+                <h5 class="card-title">Name: {{ potentialuser.fname }} {{ potentialuser.lname }}</h5>
+                <p class="card-text">Age: {{ potentialuser.age }}</p>
+                <p class="card-text">Countyr: {{ potentialuser.country }}</p>
                 <form method="POST" action="/viewrateusers/displayuser/">
                     {% csrf_token %}
                     <input type="hidden" name="userid" value="{{ potentialuser.userid }}">
-                    <input type="submit" value="View/Rate">
+                    <input type="submit" class="btn btn-primary" value="View/Rate">
                 </form>
             </div>
         </div>

@@ -1,11 +1,11 @@
 body {
-  background: #fafafa;
-  color: #333333;
+  font-weight: bold;
+  color: #37383c;
   margin-top: 5rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #444444;
+  color: #37383c;
 }
 
 ul {
@@ -13,7 +13,7 @@ ul {
 }
 
 .bg-steel {
-  background-color: #5f788a;
+  background-color: #574c4f;
 }
 
 .site-header .navbar-nav .nav-link {
@@ -86,3 +86,13 @@ a.article-title:hover {
 label {
   padding-top: 20px;
 }
+
+.cover {
+	background-image: url('background6.jpg');
+    background-repeat: no-repeat;
+	background-size: cover;
+
+}
+
+
+

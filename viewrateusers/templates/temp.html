@@ -1,0 +1,90 @@
+{% extends 'dearcomradehome/base.html' %}
+{% block content %}
+{% if usersdetails %}
+<div class="card text-center">
+    <div class="card-body">
+        <h5 class="card-title">Name: {{usersdetails.fname}} {{usersdetails.lname}}</h5>
+
+        <div align="center">
+            <h5 class="card-text">Sex: {{usersdetails.sex}} </h5>
+            <h5 class="card-text">Age: {{usersdetails.age}} </h5>
+            <h5 class="card-text">PhNo: {{usersdetails.phnumber}}</h5>
+            <h5 class="card-text">Country: {{usersdetails.country}} </h5>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4" style="width: 50%">
+                <label>Peer Rating</label>
+                {% if userratings %}
+                {{userratings.peerrating}}
+                {% else %}
+                NA
+                {% endif %}
+            </div>
+            <div class="col-md-4" style="width: 50%">
+                <label>Guest Rating</label>
+                {% if userratings %}
+                {{userratings.guestrating}}
+                {% else %}
+                NA
+                {% endif %}
+
+            </div>
+            <div class="col-md-4" style="width: 50%">
+                <label>Community Rating</label>
+                {% if userratings %}
+                {{userratings.communityrating}}
+                {% else %}
+                NA
+                {% endif %}
+            </div>
+        </div>
+        <br>
+        <h5 class="card-text">WorkInfo: {{usersdetails.workinfo}}</h5>
+
+        <br>
+        <h5 class="card-text">Desc: {{usersdetails.description}}</h5>
+        <br>
+        {% if userhistory %}
+        {% if userhistory.prevapartment1 %}
+        <h5 class="card-text">Previous apartments: {{userhistory.prevapartment1}}, </h5>
+        {% endif %}
+        {% if userhistory.prevapartment2 %}
+        <h5 class="card-text">{{userhistory.prevapartment2}}, </h5>
+        {% endif %}
+        {% if userhistory.prevapartment3 %}
+        <h5 class="card-text">{{userhistory.prevapartment3}}!</h5>
+        {% endif %}
+        {% endif %}
+        <br>
+        {% if usercomments %}
+        <h5 class="card-text">- Top Comments:</h5>
+        {% for comment in usercomments %}
+        <h5 class="card-text">- {{comment.comment}}</h5>
+        {% endfor %}
+        {% endif %}
+        <br>
+        <div  align="center">
+            <form method="post" action="/viewrateusers/addcommentratings/">
+                {% csrf_token %}
+                <input type="hidden" name="userid" value="{{ usersdetails.userid }}">
+                <label for="user">Enter a comment</label>
+                <div>
+                <textarea name="comment" type="text" rows="2" cols="30" onkeyup="Allow()"
+                          placeholder="write a comment......"></textarea>
+                </div>
+                <div>
+                    <label for="user">Enter a rating</label>
+                    <input type="number" name="rating" min="0" max="5" step="0.5">
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% else %}
+<h3>User details not available!</h3>
+{% endif %}
+{% endblock %}
